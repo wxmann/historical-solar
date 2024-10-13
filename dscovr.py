@@ -20,15 +20,15 @@ RENAME_COLUMNS = dict(
 def open_dscovr(dt: pd.Timestamp | str) -> pd.DataFrame:
     try:
         df_mag = open_dscovr_dataset(dt, "m1m").to_dataframe()
-        df_plasma = open_dscovr_dataset(dt, "f1m").to_dataframe()
+        df_faraday = open_dscovr_dataset(dt, "f1m").to_dataframe()
     except (requests.exceptions.HTTPError, ValueError):
         return pd.DataFrame(columns=MAGNOMETER_COLUMNS + FARADAY_COLUMNS)
 
     df_bfield = df_mag[MAGNOMETER_COLUMNS]
-    df_protons = df_plasma[FARADAY_COLUMNS]
+    df_plasma = df_faraday[FARADAY_COLUMNS]
 
-    df_final = df_bfield.join(df_protons)
-    return df_final.rename(columns=RENAME_COLUMNS)
+    df_combined = df_bfield.join(df_plasma)
+    return df_combined.rename(columns=RENAME_COLUMNS)
 
 
 @functools.cache
