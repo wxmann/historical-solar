@@ -166,5 +166,5 @@ cython_debug/
 *.nc
 read*.ipynb
 check*.ipynb
-Untitled.ipynb
+Untitled*.ipynb
 .DS_Store
