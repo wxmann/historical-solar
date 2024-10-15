@@ -14,9 +14,9 @@ def geomagnetic_storm_data(
     shock_thresholds: tuple[float, float] = (5, 50),
 ) -> tuple[pd.DataFrame, pd.Timestamp | None]:
     dt = pd.Timestamp(date).replace(hour=0, minute=0, second=0)
-    dt_m1d = dt - pd.Timedelta(days=1)
-    dt_p2d = dt + pd.Timedelta(days=2)
-    dt_range = pd.date_range(dt_m1d, dt_p2d, freq="D")
+    dt_min = dt - pd.Timedelta(days=before_shock // 24 + 1)
+    dt_max = dt + pd.Timedelta(days=after_shock // 24 + 1)
+    dt_range = pd.date_range(dt_min, dt_max, freq="D")
 
     def _open_data(dt):
         if satellite == "ace":
