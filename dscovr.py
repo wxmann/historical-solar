@@ -22,7 +22,7 @@ def open_dscovr(dt: pd.Timestamp | str) -> pd.DataFrame:
         df_mag = open_dscovr_dataset(dt, "m1m").to_dataframe()
         df_faraday = open_dscovr_dataset(dt, "f1m").to_dataframe()
     except (requests.exceptions.HTTPError, ValueError):
-        return pd.DataFrame(columns=MAGNOMETER_COLUMNS + FARADAY_COLUMNS)
+        return pd.DataFrame(columns=RENAME_COLUMNS.values())
 
     df_bfield = df_mag[MAGNOMETER_COLUMNS]
     df_plasma = df_faraday[FARADAY_COLUMNS]
